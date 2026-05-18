@@ -34,6 +34,7 @@
 
 ```bash
 pip install -r requirements.txt
+'''
 
 ## 🖼️ 数据集下载
 
