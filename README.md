@@ -33,7 +33,19 @@ https://www.bilibili.com/video/BV1hE411t7RN/
 - `train.py` - 训练脚本
 - `test.py` - 测试脚本
 
-## 📦 依赖安装
+## 📦 环境安装
+
+### 1. 安装 PyTorch
+
+CUDA 11.8：
+
+```bash
+conda install pytorch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 pytorch-cuda=11.8 -c pytorch -c nvidia
+# CPU Only
+conda install pytorch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 cpuonly -c pytorch
+```
+
+### 2. 安装其它依赖
 
 ```bash
 pip install -r requirements.txt
