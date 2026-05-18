@@ -47,7 +47,7 @@ pip install -r requirements.txt
 
 https://download.pytorch.org/tutorial/hymenoptera_data.zip
 
-### CIFAR10 数据集
+### CIFAR10 数据集（在 04*.py 处下载）
 
 首次运行 CIFAR10 相关代码 04*.py 时，请将：
 
