@@ -1,9 +1,10 @@
 # zero-deep-learning
-
 # PyTorch 深度学习基础教程
 
-源自小土堆 Pytorch 入门教程，https://www.bilibili.com/video/BV1hE411t7RN/ 整理重点以清晰的代码来展示。
+源自小土堆 Pytorch 入门教程，  
+https://www.bilibili.com/video/BV1hE411t7RN/  
 
+整理重点以清晰的代码来展示。  
 从零开始的 PyTorch 学习教程，涵盖数据集处理、模型构建、训练与测试全流程。
 
 ## 📚 教程内容
@@ -22,7 +23,7 @@
 | 10_loss_backward_optim.py | 损失函数、反向传播、优化器 |
 | 11_fix_save_model.py | 模型保存与加载 |
 
-### 📖 **学习顺序**（重要）
+### 📖 学习顺序（重要）
 
 建议按文件编号 **01 → 02 → 03 → ... → 11** 顺序学习
 
@@ -36,9 +37,26 @@
 
 ```bash
 pip install -r requirements.txt
-🖼️ 数据集下载
-蚂蚁蜜蜂数据集（用于 01*.py），下载到 data 文件夹下并解压
+```
+
+## 🖼️ 数据集下载
+
+### 蚂蚁蜜蜂数据集（用于 01*.py）
+
+下载到 data 文件夹下并解压：
+
 https://download.pytorch.org/tutorial/hymenoptera_data.zip
 
-CIFAR10 数据集
-首次运行 CIFAR10 相关代码 04*.py 时，请将 download=False 改为 download=True
+### CIFAR10 数据集
+
+首次运行 CIFAR10 相关代码 04*.py 时，请将：
+
+```python
+download=False
+```
+
+改为：
+
+```python
+download=True
+```
