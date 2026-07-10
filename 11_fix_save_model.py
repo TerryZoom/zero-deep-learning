@@ -1,12 +1,15 @@
 import torch
 import torch.nn as nn
 import torchvision
+from torchvision.models import vgg16, VGG16_Weights
 
-vgg16_false1 = torchvision.models.vgg16(pretrained = False)
-vgg16_true1 = torchvision.models.vgg16(pretrained = True)
-vgg16_true2 = torchvision.models.vgg16(pretrained = True)
-vgg16_false2 = torchvision.models.vgg16(pretrained = False)
+# 不加载预训练权重（等价于 pretrained=False）
+vgg16_false1 = vgg16(weights=None)
+vgg16_false2 = vgg16(weights=None)
 
+# 加载 ImageNet 预训练权重（等价于 pretrained=True）
+vgg16_true1 = vgg16(weights=VGG16_Weights.IMAGENET1K_V1)
+vgg16_true2 = vgg16(weights=VGG16_Weights.IMAGENET1K_V1)
 
 train_data = torchvision.datasets.CIFAR10(
     root='data/CIFAR10',
