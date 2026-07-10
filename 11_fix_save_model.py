@@ -28,22 +28,22 @@ vgg16_false1.classifier[6] = nn.Linear(4096, 10) # (4096, 1000) -> (4096, 10)
 print(vgg16_false1)
 print('-' * 100)
 
-# Part2: save
-# method1: cons + para
-# save
-torch.save(vgg16_false2, 'models/vgg16_method1.pth')
-# use
-model1 = torch.load('models/vgg16_method1.pth')
-print(model1)
-print('-' * 100)
+# # Part2: save
+# # method1: cons + para
+# # save
+# torch.save(vgg16_false2, 'models/vgg16_method1.pth')
+# # use
+# model1 = torch.load('models/vgg16_method1.pth')
+# print(model1)
+# print('-' * 100)
 
-# method2: only para(format: dict)
-# save
-torch.save(vgg16_false2.state_dict(), 'models/vgg16_method2.pth')
-# use
-model2 = torchvision.models.vgg16(pretrained = False) # must design same cons first
-model2.load_state_dict(
-    torch.load('models/vgg16_method2.pth')
-)
-model2.eval()
-print(model2)
+# # method2: only para(format: dict)
+# # save
+# torch.save(vgg16_false2.state_dict(), 'models/vgg16_method2.pth')
+# # use
+# model2 = torchvision.models.vgg16(pretrained = False) # must design same cons first
+# model2.load_state_dict(
+#     torch.load('models/vgg16_method2.pth')
+# )
+# model2.eval()
+# print(model2)
