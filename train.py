@@ -2,6 +2,7 @@ import torch
 import torchvision
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
+import os
 writer = SummaryWriter('logs')
 
 from model import * # model.py
@@ -44,19 +45,19 @@ lr = 0.001
 optimizer = torch.optim.SGD(rui.parameters(),
                             lr = lr)
 
-train_step = 0
-test_step = 0
 epoch_num = 30
 for epoch in range(epoch_num):
     print('-' * 10, f'第{epoch + 1}轮训练', '-' * 10)
+
     rui.train()
+    train_step = 0
     for data in train_loader:
         imgs, targets = data
-        imgs = imgs.to(device)
-        targets = targets.to(device)
-        
+        imgs, targets = imgs.to(device), targets.to(device)
+
         output = rui(imgs)
         loss = loss_fn(output, targets)
+
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -64,32 +65,32 @@ for epoch in range(epoch_num):
         train_step += 1
         if train_step % 1000 == 0:
             print(f'训练次数: {train_step}, Loss: {loss.item():.4f}')
-            writer.add_scalar('train_loss', loss.item(), train_step)
-    
+            writer.add_scalar('train_loss', loss.item(), epoch * len(train_loader) + train_step)
+
     rui.eval()
     total_test_loss = 0
     total_acc = 0
     with torch.no_grad():
-        for data in test_loader:
-            imgs, targets = data
-            imgs = imgs.to(device)
-            targets = targets.to(device)
-            
+        for imgs, targets in test_loader:
+            imgs, targets = imgs.to(device), targets.to(device)
             outputs = rui(imgs)
             loss = loss_fn(outputs, targets)
-            total_test_loss += loss.item() # attention .item()
-            avg_test_loss = total_test_loss / len(test_loader)
-            
-            acc = (outputs.argmax(1) == targets).sum().item()
-            total_acc += acc
+
+            total_test_loss += loss.item()
+            total_acc += (outputs.argmax(1) == targets).sum().item()
+
+    avg_test_loss = total_test_loss / len(test_loader)
+    acc = total_acc / len(test_data)
 
     print(f'整体平均Loss: {avg_test_loss:.4f}')
-    print(f'整体acc: {total_acc / len(test_data):.4f}')
-    writer.add_scalar('test_loss', total_test_loss, test_step)
-    writer.add_scalar('test_acc', total_acc / len(test_data), test_step)
-    test_step += 1
+    print(f'整体acc: {acc:.4f}')
+
+    writer.add_scalar('test_loss', avg_test_loss, epoch)
+    writer.add_scalar('test_acc', acc, epoch)
 
     if (epoch + 1) % 10 == 0:
-        torch.save(rui, f'models/rui_epoch{epoch + 1}_{device}.pth')
+        os.makedirs('models', exist_ok=True)
+        torch.save(rui.state_dict(), f'models/rui_epoch{epoch + 1}_{device}.pth')
         print('已保存')
+
 writer.close()
