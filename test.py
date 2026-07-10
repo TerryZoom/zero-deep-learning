@@ -22,7 +22,7 @@ class Rui(nn.Module):
         x = self.model(x)
         return x
 
-image_pth = r'data\naiwa_kongfu.jpg'
+image_pth = r'data\cheems.png'
 img = Image.open(image_pth)
 print(img)
 img_3c = img.convert('RGB')
@@ -39,15 +39,32 @@ img_input = transform(img_3c)
 img_input = img_input.to(device) # put to GPU
 print(img_input)
 
-model = torch.load(r'models\rui_epoch30_cuda.pth', 
-                   map_location=torch.device(device))
-model.to(device) # put to GPU
+model = Rui()  # ① 先建模型
+model.load_state_dict(
+    torch.load(r'models\rui_epoch30_cuda.pth',
+               map_location=torch.device(device))
+)  # ② 再加载权重
+model.to(device)
+
 model.eval()
 print(model)
 print('-' * 100)
 
 img_input = torch.reshape(img_input, (1, 3, 32, 32))
+
 with torch.no_grad():
     output = model(img_input)
 print(output)
 print(output.argmax(1))
+
+# CIFAR10 类别索引对应关系
+# 0: airplane     飞机
+# 1: automobile   汽车
+# 2: bird         鸟
+# 3: cat          猫
+# 4: deer         鹿
+# 5: dog          狗
+# 6: frog         青蛙
+# 7: horse        马
+# 8: ship         船
+# 9: truck        卡车
