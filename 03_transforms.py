@@ -25,6 +25,8 @@ class Person:
 
 # self is the sample -> rui
 rui = Person('rui') # <- auto use __init__
+print(rui.name)
+
 rui('rui') # let sample be used in paren. = rui.__call__('rui')
 rui.hi('rui') # also can be seen as Person.hi(rui, 'rui')
 
